@@ -24,7 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontFamily
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.pokemonsdemo.data.data.PokemonListEntry
@@ -48,7 +48,11 @@ fun PokemonListScreen(
             contentPadding = PaddingValues(8.dp)
         ) {
             items(items = pokemonListEntry, itemContent = { item ->
-                PokemonList(item, modifier, viewModel)
+                Column(
+                    modifier = Modifier.padding(4.dp)
+                ) {
+                    PokemonList(item, modifier, viewModel)
+                }
             })
         }
     }
@@ -117,6 +121,7 @@ private fun PokemonList(
             Text(
                 text = entry.pokemonName,
                 fontSize = 20.sp,
+                fontFamily = FontFamily.Serif,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
