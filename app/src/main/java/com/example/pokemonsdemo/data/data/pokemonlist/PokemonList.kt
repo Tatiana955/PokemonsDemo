@@ -1,4 +1,4 @@
-package com.example.pokemonsdemo.data.data
+package com.example.pokemonsdemo.data.data.pokemonlist
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

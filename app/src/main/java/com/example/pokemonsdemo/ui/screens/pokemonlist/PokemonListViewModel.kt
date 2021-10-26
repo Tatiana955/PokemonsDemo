@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
-import com.example.pokemonsdemo.data.data.PokemonListEntry
+import com.example.pokemonsdemo.data.data.pokemonlist.PokemonListEntry
 import com.example.pokemonsdemo.data.repository.Repository
 import com.example.pokemonsdemo.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -2,7 +2,7 @@ package com.example.pokemonsdemo.data.models.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.pokemonsdemo.data.data.Result
+import com.example.pokemonsdemo.data.data.pokemonlist.Result
 
 @Database(
     entities = [

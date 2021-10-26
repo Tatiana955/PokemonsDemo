@@ -1,7 +1,8 @@
 package com.example.pokemonsdemo.data.repository
 
-import com.example.pokemonsdemo.data.data.PokemonList
-import com.example.pokemonsdemo.data.data.Result
+import com.example.pokemonsdemo.data.data.pokemon.Pokemon
+import com.example.pokemonsdemo.data.data.pokemonlist.PokemonList
+import com.example.pokemonsdemo.data.data.pokemonlist.Result
 import com.example.pokemonsdemo.data.models.local.LocalModel
 import com.example.pokemonsdemo.data.models.remote.RemoteModel
 import com.example.pokemonsdemo.util.Resource
@@ -25,5 +26,15 @@ class Repository @Inject constructor(
             return Resource.Error("Error: ${e.message}")
         }
         return Resource.Success(local.getResult())
+    }
+
+    suspend fun getPokemonInfo(name: String): Resource<Pokemon> {
+        val pokemon: Pokemon
+        try {
+            pokemon = remote.getPokemonInfo(name)!!
+        } catch(e: Exception) {
+            return Resource.Error("Error: ${e.message}")
+        }
+        return Resource.Success(pokemon)
     }
 }

@@ -1,7 +1,8 @@
 package com.example.pokemonsdemo.data.models.remote
 
 import android.util.Log
-import com.example.pokemonsdemo.data.data.PokemonList
+import com.example.pokemonsdemo.data.data.pokemon.Pokemon
+import com.example.pokemonsdemo.data.data.pokemonlist.PokemonList
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.json.*
@@ -28,10 +29,22 @@ class RemoteModel @Inject constructor() : ApiService {
             client.get {
                 url(POKEMON)
                 parameter("limit", LIMIT)
-                parameter("pageSize", PAGE_SIZE)
+                parameter("offset", OFFSET)
             }
         } catch(e: Exception) {
-            Log.d(TAG, "Error: ${e.message}")
+            Log.d(TAG, "Error in getPokemonList(): ${e.message}")
+            pokemon
+        }
+    }
+
+    override suspend fun getPokemonInfo(name: String): Pokemon? {
+        val pokemon: Pokemon? = null
+        return try {
+            client.get(path = name) {
+                url("$POKEMON/$name")
+            }
+        } catch(e: Exception) {
+            Log.d(TAG, "Error in getPokemonInfo(): ${e.message}")
             pokemon
         }
     }
@@ -43,6 +56,6 @@ class RemoteModel @Inject constructor() : ApiService {
         const val TAG = "!!!RemoteModel"
 
         const val LIMIT = 10
-        const val PAGE_SIZE = 10
+        const val OFFSET = 10
     }
 }

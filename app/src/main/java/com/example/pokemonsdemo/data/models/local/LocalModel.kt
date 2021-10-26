@@ -2,7 +2,7 @@ package com.example.pokemonsdemo.data.models.local
 
 import android.content.Context
 import androidx.room.*
-import com.example.pokemonsdemo.data.data.Result
+import com.example.pokemonsdemo.data.data.pokemonlist.Result
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

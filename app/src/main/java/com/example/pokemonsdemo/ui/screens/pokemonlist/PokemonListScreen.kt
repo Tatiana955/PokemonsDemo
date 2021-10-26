@@ -3,6 +3,7 @@ package com.example.pokemonsdemo.ui.screens.pokemonlist
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -22,12 +23,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontFamily
+import androidx.navigation.NavController
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import com.example.pokemonsdemo.data.data.PokemonListEntry
+import com.example.pokemonsdemo.data.data.pokemonlist.PokemonListEntry
+import com.example.pokemonsdemo.ui.NavItem
+import com.example.pokemonsdemo.ui.screens.components.PokemonsCircularProgressIndicator
 import kotlinx.coroutines.launch
 
 @ExperimentalFoundationApi
@@ -35,6 +39,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PokemonListScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     val pokemonListEntry by remember { viewModel.pokemonListEntry }
@@ -51,7 +56,12 @@ fun PokemonListScreen(
                 Column(
                     modifier = Modifier.padding(4.dp)
                 ) {
-                    PokemonList(item, modifier, viewModel)
+                    PokemonList(
+                        entry = item,
+                        modifier = modifier,
+                        viewModel = viewModel,
+                        navController = navController
+                    )
                 }
             })
         }
@@ -63,7 +73,8 @@ fun PokemonListScreen(
 private fun PokemonList(
     entry: PokemonListEntry,
     modifier: Modifier,
-    viewModel: PokemonListViewModel
+    viewModel: PokemonListViewModel,
+    navController: NavController
 ) {
     val defaultDominantColor = MaterialTheme.colors.surface
     var dominantColor by remember {
@@ -84,6 +95,12 @@ private fun PokemonList(
                     )
                 )
             )
+            .clickable {
+                navController.navigate(
+                    NavItem.PokemonDetailsScreen.route +
+                            "/${dominantColor.toArgb()}/${entry.pokemonName}"
+                )
+            }
     ) {
         Column() {
             val painter = rememberImagePainter(
@@ -101,11 +118,8 @@ private fun PokemonList(
                     .align(CenterHorizontally),
             )
             if (painterState is ImagePainter.State.Loading) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colors.primary,
-                    modifier = Modifier
-                        .scale(0.5f)
-                        .align(CenterHorizontally)
+                PokemonsCircularProgressIndicator(
+                    modifier = modifier
                 )
             }
             else if (painterState is ImagePainter.State.Success) {
