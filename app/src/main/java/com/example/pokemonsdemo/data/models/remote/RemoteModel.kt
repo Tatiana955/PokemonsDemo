@@ -56,6 +56,6 @@ class RemoteModel @Inject constructor() : ApiService {
         const val TAG = "!!!RemoteModel"
 
         const val LIMIT = 10
-        const val OFFSET = 10
+        const val OFFSET = 0
     }
 }

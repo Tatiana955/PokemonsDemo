@@ -15,12 +15,10 @@ class Repository @Inject constructor(
 
     suspend fun getPokemonList(): Resource<List<Result>> {
         val remoteList: PokemonList?
-        val localList: List<Result>
         try {
             remoteList = remote.getPokemonList()
             if (remoteList != null) {
-                localList = remoteList.results!!
-                local.insertResultList(localList)
+                local.insertResultList(remoteList.results!!)
             }
         } catch(e: Exception) {
             return Resource.Error("Error: ${e.message}")
